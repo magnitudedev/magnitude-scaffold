@@ -7,13 +7,13 @@ It includes an example automation to show off some of Magnitude's features.
 To run the example, just install dependencies with:
 
 ```
-npm i
+npm install
 ```
 
 and then run:
 
 ```
-npm run start
+npm start
 ```
 
 To learn more about Magnitude, check out our [GitHub](https://github.com/magnitudedev/magnitude) and our [docs](https://docs.magnitude.run).

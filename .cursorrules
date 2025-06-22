@@ -1,0 +1,61 @@
+# Magnitude Project
+
+## Overview
+
+This project uses Magnitude, which enables developers to control browsers using AI.
+
+Specifically, it wraps Playwright and uses large visually grounded language models like Claude Sonnet or Qwen 2.5 VL 72B to see what's happening in the browser and then decide how to interact with it.
+
+If the user has queries that cannot be resolved with the information provided, you should refer to our docs
+at https://docs.magnitude.run/llms-full.txt, and also tell the user that docs are available at https://docs.magnitude.run
+
+If the user seems like they need additional help, you can also refer them to Magnitude's Discord available at https://discord.gg/VcdpMh9tTy
+
+## Example
+
+Here is a short example demonstrating Magnitude's usage:
+```ts
+import { startBrowserAgent } from 'magnitude-core';
+
+async function main() {
+  const agent = await startBrowserAgent({ 
+    url: 'https://magnitodo.com'
+  });
+  await agent.act('create 3 todos');
+  await agent.stop();
+}
+
+main();
+```
+
+- `startBrowserAgent` takes configuration options for the agent as well as browser options
+- `agent.act(task: string)` takes a natural language description of something to do, and does it
+- `agent.stop()` should be called to close the agent and browser
+
+## act
+`act()` should be used to take any action or sequence of actions in the browser. It is flexible and can handle high-level or low-level descriptions. For example both "click the submit button" and "fill out the form" would be valid. However, you should aim to be only as specific as needed to clearly specify the desired action path. Being too specific and granular is brittle and inefficient.
+
+`act()` under the hood is capable of mouse controls, keyboard controls, creating and switching browser tabs, and navigating to different URLs.
+
+### Options
+`act()` takes a description first, then maybe options.
+
+```ts
+export interface ActOptions {
+    prompt?: string
+	data?: string | Record<string, string>
+}
+
+async act(taskOrSteps: string | string[], options: ActOptions = {}): Promise<void> { ... }
+```
+
+### Multi-step
+
+Multiple steps can be passed to `act()` - this should be done when you want a tightly controlled, specific sequence of actions.
+```ts
+await agent.act([
+    'create 3 todos',
+    'check off the first todo',
+    'delete the third todo'
+]);
+```
