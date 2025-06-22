@@ -1,5 +1,8 @@
 import { startBrowserAgent } from "magnitude-core";
 import z from 'zod';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 async function main() {
     const agent = await startBrowserAgent({
