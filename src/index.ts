@@ -26,7 +26,7 @@ async function main() {
     });
 
     // You can pass custom prompt instructions to any act()
-    await agent.act('Create a new task assigned to Magnus', { prompt: 'Make up task data' });
+    await agent.act('Create a new task', { prompt: 'Make up task data' });
    
     await agent.act('Drag the first todo to In Progress');
 
