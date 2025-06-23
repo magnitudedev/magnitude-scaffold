@@ -15,7 +15,7 @@ async function main() {
         prompt: 'Prefer mouse to keyboard when filling out form fields'
     });
 
-    // Magnitude can handle high-level actions
+    // Magnitude can handle high-level tasks
     await agent.act("Add a new member", {
         // Pass data that the agent will use where appropriate
         data: {
