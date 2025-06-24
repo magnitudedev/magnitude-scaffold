@@ -27,7 +27,8 @@ async function main() {
 
     // You can pass custom prompt instructions to any act()
     await agent.act('Create a new task', { prompt: 'Make up task data' });
-   
+
+    // It can also handle low-level actions
     await agent.act('Drag the first todo to In Progress');
 
     // Intelligently extract data based on the DOM content matching a provided zod schema
