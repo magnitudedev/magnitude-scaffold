@@ -5,42 +5,33 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 async function main() {
-    // Start at our example issue tracker clone
     const agent = await startBrowserAgent({
         // Starting URL for agent
-        url: 'https://magnitasks.com',
+        url: 'https://docs.magnitude.run/getting-started/quickstart',
         // Show thoughts and actions
-        narrate: true,
-        // Any system instructions specific to your agent or website
-        prompt: 'Prefer mouse to keyboard when filling out form fields'
+        narrate: true
     });
-
-    // Magnitude can handle high-level tasks
-    await agent.act("Add a new member", {
-        // Pass data that the agent will use where appropriate
-        data: {
-            name: "Magnus",
-            email: "magnus@magnitude.run",
-            color: "blue",
-        }
-    });
-
-    // You can pass custom prompt instructions to any act()
-    await agent.act('Create a new task', { prompt: 'Make up task data' });
-
-    // It can also handle low-level actions
-    await agent.act('Drag the first todo to In Progress');
 
     // Intelligently extract data based on the DOM content matching a provided zod schema
-    const tasks = await agent.extract('Extract all tasks in todo column', z.array(z.object({
-        title: z.string(),
-        description: z.string(),
-        priority: z.enum(['low', 'medium', 'high', 'urgent']),
-        labels: z.array(z.string()),
-        assignee: z.string()
-    })));
+    const gettingStarted = await agent.extract('Extract how to get started with Magnitude', z.object({
+        difficulty: z.enum(['easy', 'medium', 'hard']),
+        steps: z.array(z.string()),
+    }));
 
-    console.log("Todos left:", tasks);
+    // Navigate to a new URL
+    await agent.nav('https://magnitasks.com');
+
+    // Magnitude can handle high-level tasks
+    await agent.act('Create a task', { 
+        // Optionally pass data that the agent will use where appropriate
+        data: { 
+            title: 'Get started with Magnitude', 
+            description: gettingStarted.steps.map(step => `• ${step}`).join('\n') 
+        } 
+    });
+
+    // It can also handle low-level actions
+    await agent.act('Drag "Get started with Magnitude" to the top of the in progress column');
 
     // Stop agent and browser
     await agent.stop();
