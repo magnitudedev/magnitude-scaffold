@@ -14,6 +14,7 @@ async function main() {
 
     // Intelligently extract data based on the DOM content matching a provided zod schema
     const gettingStarted = await agent.extract('Extract how to get started with Magnitude', z.object({
+        // Agent can extract existing data or new insights
         difficulty: z.enum(['easy', 'medium', 'hard']),
         steps: z.array(z.string()),
     }));
