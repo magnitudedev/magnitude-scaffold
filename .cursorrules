@@ -59,6 +59,7 @@ await startBrowserAgent({
         },
         // https://playwright.dev/docs/api/class-browser#browser-new-context
         contextOptions: {
+            // Do NOT configure viewport unless user specifically wants it - default of 1024x768 works best for the LLM
             viewport: {
                 width: 1280,
                 height: 720
