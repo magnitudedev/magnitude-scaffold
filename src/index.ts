@@ -9,7 +9,7 @@ async function main() {
         // Starting URL for agent
         url: 'https://docs.magnitude.run/getting-started/quickstart',
         // Show thoughts and actions
-        narrate: true
+        narrate: true,
     });
 
     // Intelligently extract data based on the DOM content matching a provided zod schema
