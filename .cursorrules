@@ -161,3 +161,8 @@ Don't overcomplicate automations that can be completed with a few `act()` calls 
 ## Playwright Access
 
 The Magnitude agent exposes its current Page and BrowserContext via the `agent.page` and `agent.context` properties. If the agent switches tabs, `agent.page` will always refer to the agent's active tab. Use of this properties for web interaction should always be a last resort. Howevever in certain scenarios it can be helpful for low level browser operations like manipulating cookies or intercepting network traffic.
+
+
+## Waiting
+
+Every call to `agent.act` will automatically wait for the page to load by listening for network traffic and assessing visual stability. Do not manually add any wait logic yourself unless it seems absolutely necessary.
